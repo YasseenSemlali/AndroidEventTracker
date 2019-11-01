@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">EventFinleyYasseen</string>
-    <string name="add_id">action_button</string>
+    <string name="item1_name">About</string>
+    <string name="item2_name">Current</string>
+    <string name="item3_name">Favourites</string>
+    <string name="item4_name">WWW</string>
 </resources>
