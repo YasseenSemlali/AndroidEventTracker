@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EventFinleyYasseen</string>
+    <string name="add_id">action_button</string>
 </resources>
