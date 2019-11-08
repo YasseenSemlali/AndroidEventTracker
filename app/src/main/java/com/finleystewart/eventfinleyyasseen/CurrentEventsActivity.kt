@@ -4,11 +4,11 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 
-class AboutActivity : Activity() {
+class CurrentEventsActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i("AssignmentTwo","About Activity launched")
+        Log.i("AssignmentTwo","Current Events Activity launched")
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.about)
+        setContentView(R.layout.current_events_activity)
     }
 }
