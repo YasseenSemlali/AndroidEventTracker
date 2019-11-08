@@ -17,15 +17,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val dao =  FirebaseDAOImpl();
-        dao.addEvent(Event(
-            "category",
-            "short",
-            "long"
-        ));
-
-        Log.d("firebase", dao.getAllEvents().get(0).toString())
-
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu, menu)
 
