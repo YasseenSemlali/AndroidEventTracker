@@ -2,15 +2,13 @@ package com.finleystewart.eventfinleyyasseen
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.Menu
-import android.content.Intent
-import android.net.Uri
+import android.util.Log
 
-class EventActivity : Activity() {
+class AboutActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.i("AssignmentOne","About Activity launched")
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.about)
     }
-
 }

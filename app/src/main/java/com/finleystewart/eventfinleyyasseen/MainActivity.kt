@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.content.Intent
 import android.net.Uri
+import android.view.MenuItem
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +27,18 @@ class MainActivity : AppCompatActivity() {
         )
 
         return true;
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item1 -> {
+                startActivity(Intent(this, AboutActivity::class.java))
+                return true
+            }
+            else -> {
+                return super.onOptionsItemSelected(item)
+            }
+        }
     }
 
 }

@@ -4,4 +4,6 @@
     <string name="item2_name">Current</string>
     <string name="item3_name">Favourites</string>
     <string name="item4_name">WWW</string>
+    <string name="aboutus">This app was made by Finley Stewart and Yasseen Semlali as a second project for their Android App Development Course.</string>
+    <string name="aboutTitle">About</string>
 </resources>
