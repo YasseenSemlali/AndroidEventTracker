@@ -1,8 +1,6 @@
 package com.finleystewart.eventfinleyyasseen.firebase.model
 
 import com.finleystewart.eventfinleyyasseen.firebase.EventRepeat
-import com.google.firebase.database.Exclude
-import java.lang.IllegalArgumentException
 import java.util.*
 
 class Event(
@@ -11,7 +9,7 @@ class Event(
     val longDesc: String,
     val eventDate: Date = Calendar.getInstance().time,
     val eventDuration: Double = 1.0,
-    val repeatType: Int = EventRepeat.SINGLE,
+    val repeatType: EventRepeat = EventRepeat.SINGLE,
     val timesRepeated: Int = 1,
     val expired: Boolean = false,
     val siteUrl: String? = null,
@@ -19,18 +17,29 @@ class Event(
     var key: String? = null
 ) {
 
-    init {
-        if(shortDesc.length > 20) {
-            throw IllegalArgumentException("shortDesc is limited to 20 characters")
-        }
-        if(longDesc.length > 140) {
-            throw IllegalArgumentException("shortDesc is limited to 140 characters")
-        }
+    companion object  {
+        val SHORT_DESC_MAX = 20;
+        val LONG_DESC_MAX = 140;
+        val MAX_DAYS = 60
 
-        if(!EventRepeat.isValid(repeatType)) {
-            throw IllegalArgumentException("repeatType is invalid")
+        fun  timesRepeatedIsValid(
+            repeatType: EventRepeat,
+            timesRepeated: Int
+        ): Boolean {
+            // TODO validate timesRepeated
+
+            return true;
         }
-        // TODO validate timesRepeated
+    }
+    init {
+        require(shortDesc.length <= SHORT_DESC_MAX) { "shortDesc is limited to $SHORT_DESC_MAX characters" }
+        require(longDesc.length <= LONG_DESC_MAX) { "shortDesc is limited to $LONG_DESC_MAX characters" }
+        require(timesRepeatedIsValid(repeatType, timesRepeated)) {"The event not repeat for more than $MAX_DAYS days after the start date"}
+
+    }
+
+    override fun toString(): String {
+        return "Event(category='$category', shortDesc='$shortDesc', longDesc='$longDesc', eventDate=$eventDate, eventDuration=$eventDuration, repeatType=$repeatType, timesRepeated=$timesRepeated, expired=$expired, siteUrl=$siteUrl, eventUrl=$eventUrl, key=$key)"
     }
 
 }

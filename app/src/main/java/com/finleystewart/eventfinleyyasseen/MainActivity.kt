@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
+import com.finleystewart.eventfinleyyasseen.firebase.FirebaseDAOImpl
+import com.finleystewart.eventfinleyyasseen.firebase.model.Event
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,6 +17,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val dao =  FirebaseDAOImpl();
+        dao.addEvent(Event(
+            "category",
+            "short",
+            "long"
+        ));
+
+        Log.d("firebase", dao.getAllEvents().get(0).toString())
+
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu, menu)
 
