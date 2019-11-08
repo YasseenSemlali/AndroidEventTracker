@@ -6,6 +6,9 @@ import android.view.Menu
 import android.content.Intent
 import android.net.Uri
 import android.view.MenuItem
+import android.util.Log
+import com.finleystewart.eventfinleyyasseen.firebase.FirebaseDAOImpl
+import com.finleystewart.eventfinleyyasseen.firebase.model.Event
 
 class MainActivity : AppCompatActivity() {
 
