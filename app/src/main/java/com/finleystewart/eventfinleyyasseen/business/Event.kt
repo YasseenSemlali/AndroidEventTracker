@@ -1,13 +1,13 @@
-package com.finleystewart.eventfinleyyasseen.firebase.model
+package com.finleystewart.eventfinleyyasseen.business
 
-import com.finleystewart.eventfinleyyasseen.firebase.EventRepeat
 import java.util.*
 
 class Event(
+    val key: String,
     val category: String = "",
     val shortDesc: String = "",
     val longDesc: String = "",
-    val eventDate: Long = Calendar.getInstance().time.time,
+    val eventDate: Date = Calendar.getInstance().time,
     val eventDuration: Double = 1.0,
     val repeatType: EventRepeat = EventRepeat.SINGLE,
     val timesRepeated: Int = 1,
@@ -34,12 +34,17 @@ class Event(
     init {
         require(shortDesc.length <= SHORT_DESC_MAX) { "shortDesc is limited to $SHORT_DESC_MAX characters" }
         require(longDesc.length <= LONG_DESC_MAX) { "shortDesc is limited to $LONG_DESC_MAX characters" }
-        require(timesRepeatedIsValid(repeatType, timesRepeated)) {"The event not repeat for more than $MAX_DAYS days after the start date"}
+        require(
+            timesRepeatedIsValid(
+                repeatType,
+                timesRepeated
+            )
+        ) {"The event not repeat for more than $MAX_DAYS days after the start date"}
 
     }
 
     override fun toString(): String {
-        return "Event(category='$category', shortDesc='$shortDesc', longDesc='$longDesc', eventDate=$eventDate, eventDuration=$eventDuration, repeatType=$repeatType, timesRepeated=$timesRepeated, expired=$expired, siteUrl=$siteUrl, eventUrl=$eventUrl)"
+        return "Event(key='$key', category='$category', shortDesc='$shortDesc', longDesc='$longDesc', eventDate=$eventDate, eventDuration=$eventDuration, repeatType=$repeatType, timesRepeated=$timesRepeated, expired=$expired, siteUrl=$siteUrl, eventUrl=$eventUrl)"
     }
 
 }

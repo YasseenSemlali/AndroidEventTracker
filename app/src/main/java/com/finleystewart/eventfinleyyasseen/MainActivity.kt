@@ -6,10 +6,12 @@ import android.view.Menu
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import com.finleystewart.eventfinleyyasseen.firebase.EventDAOImpl
-import com.finleystewart.eventfinleyyasseen.firebase.model.Event
 import android.widget.Toast
+import com.finleystewart.eventfinleyyasseen.firebase.EventDAOImpl
 import com.finleystewart.eventfinleyyasseen.firebase.FirebaseConstants
+import com.finleystewart.eventfinleyyasseen.firebase.UserDAOImpl
+import com.finleystewart.eventfinleyyasseen.firebase.model.DBEvent
+import com.finleystewart.eventfinleyyasseen.firebase.model.DBUser
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -76,7 +78,16 @@ class MainActivity : AppCompatActivity() {
                     // ...
                 }
         } else {
+           // var a = EventDAOImpl()
+           // a.addEvent(DBEvent("test"))
+           // a.loadEvents()
 
+            var b = UserDAOImpl()
+            b.addUser(DBUser(
+                "email",
+                listOf("-LtMJIjJedOt2wmDXyay", "key2")
+            ))
+            b.loadUserEvents()
         }
     }
 
