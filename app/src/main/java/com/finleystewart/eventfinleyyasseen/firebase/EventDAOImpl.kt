@@ -12,7 +12,7 @@ class EventDAOImpl {
         val key = eventDB.push().key!!
 
         eventDB.child(key).setValue(event)
-        Log.d(FirebaseConstants.FIREBASE_TAG, "Event added: " + event)
+        Log.d(FirebaseConstants.FIREBASE_TAG, "Event added: $event")
     }
 
     fun loadEvents(events: MutableCollection<Event> =  mutableSetOf()): MutableCollection<Event> {

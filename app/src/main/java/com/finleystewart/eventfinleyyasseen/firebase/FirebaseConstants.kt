@@ -2,7 +2,7 @@ package com.finleystewart.eventfinleyyasseen.firebase
 
 object FirebaseConstants {
     const val FIREBASE_EVENTS: String = "events"
-    const val FIREBASE_USERS: String = "events"
+    const val FIREBASE_USERS: String = "users"
 
     const val FIREBASE_TAG: String = "firebase"
 

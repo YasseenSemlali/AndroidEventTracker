@@ -12,9 +12,15 @@ import com.finleystewart.eventfinleyyasseen.firebase.FirebaseConstants
 import com.finleystewart.eventfinleyyasseen.firebase.UserDAOImpl
 import com.finleystewart.eventfinleyyasseen.firebase.model.DBEvent
 import com.finleystewart.eventfinleyyasseen.firebase.model.DBUser
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
+
+
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //FirebaseApp.getInstance("user")
         this.initUserDB()
 
         this.loginMainDB()
@@ -44,6 +49,32 @@ class MainActivity : AppCompatActivity() {
         )
 
         return true
+    }
+
+    private fun googleLogin() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+
+        if(account != null) {
+            val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+            val signInIntent = mGoogleSignInClient.signInIntent
+            startActivityForResult(signInIntent, 0)
+        }
+    }
+
+    private fun googleLogout() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+
+        if(account != null) {
+            FirebaseAuth.getInstance(FirebaseApp.getInstance("user")).signOut()
+        }
     }
 
     private fun initUserDB() {
@@ -78,16 +109,7 @@ class MainActivity : AppCompatActivity() {
                     // ...
                 }
         } else {
-           // var a = EventDAOImpl()
-           // a.addEvent(DBEvent("test"))
-           // a.loadEvents()
 
-            var b = UserDAOImpl()
-            b.addUser(DBUser(
-                "email",
-                listOf("-LtMJIjJedOt2wmDXyay", "key2")
-            ))
-            b.loadUserEvents()
         }
     }
 
