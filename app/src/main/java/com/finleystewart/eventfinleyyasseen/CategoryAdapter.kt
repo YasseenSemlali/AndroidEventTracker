@@ -5,26 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.Adapter
-import com.finleystewart.eventfinleyyasseen.business.Event
-import kotlinx.android.synthetic.main.layout_category.view.*
+import com.finleystewart.eventfinleyyasseen.firebase.model.Event
 import kotlinx.android.synthetic.main.layout_event.view.*
 
-class EventAdapter(private val events: List<Event>)  : RecyclerView.Adapter<EventAdapter.ViewHolder>()
+class CategoryAdapter(private val categories: List<Category>)  : RecyclerView.Adapter<CategoryAdapter.ViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_event, parent,false))
+            .inflate(R.layout.layout_category, parent,false))
     }
 
     override fun getItemCount(): Int {
-        return events.size
+        return categories.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val event = events[position]
+        val event = categories[position]
 
-        holder.view.shortDesc.text = event.shortDesc
-        holder.view.date.text = event.date
+        //WIP
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)

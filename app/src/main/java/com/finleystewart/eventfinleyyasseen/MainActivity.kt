@@ -8,9 +8,12 @@ import android.net.Uri
 import android.view.MenuItem
 import android.util.Log
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.finleystewart.eventfinleyyasseen.firebase.EventDAOImpl
 import com.finleystewart.eventfinleyyasseen.firebase.FirebaseConstants
 import com.finleystewart.eventfinleyyasseen.firebase.UserDAOImpl
+import com.finleystewart.eventfinleyyasseen.business.Event
 import com.finleystewart.eventfinleyyasseen.firebase.model.DBEvent
 import com.finleystewart.eventfinleyyasseen.firebase.model.DBUser
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -18,10 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
-
-
-
-
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +34,23 @@ class MainActivity : AppCompatActivity() {
         this.initUserDB()
 
         this.loginMainDB()
+
+        val DAO : EventDAOImpl = EventDAOImpl()
+
+        /*
+
+        WIP
+
+        val categories : MutableCollection<Event> = DAO.loadCategories()
+
+        viewManager = LinearLayoutManager(applicationContext)
+        viewAdapter = CategoryAdapter(categories)
+        recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
+        */
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
