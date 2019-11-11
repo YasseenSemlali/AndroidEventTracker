@@ -5,27 +5,24 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="75dp" >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/shortDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="75dp"
                 android:layout_alignParentLeft="true"
-                android:text="TextView" />
+                android:layout_height="match_parent"/>
 
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/shortDesc"
-                android:layout_alignParentLeft="true"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/icon"
                 android:text="TextView" />
-
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
