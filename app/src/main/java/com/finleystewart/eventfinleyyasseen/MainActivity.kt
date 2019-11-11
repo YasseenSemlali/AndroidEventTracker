@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         WIP
 
-        val categories : MutableCollection<Event> = DAO.loadCategories()
+        val categories : MutableCollection<Category> = DAO.loadCategories()
 
         viewManager = LinearLayoutManager(applicationContext)
         viewAdapter = CategoryAdapter(categories)
