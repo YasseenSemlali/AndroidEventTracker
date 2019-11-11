@@ -17,10 +17,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
-
-
-
-
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +27,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val d = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        Log.d("temp", d.parse("2019-11-13 11:00").time.toString())
+        Log.d("temp", d.parse("2019-11-15 11:00").time.toString())
+        Log.d("temp", d.parse("2019-11-18 11:00").time.toString())
+        Log.d("temp", d.parse("2019-11-21 11:00").time.toString())
+        Log.d("temp", d.parse("2019-11-29 11:00").time.toString())
+        Log.d("temp", d.parse("2019-12-01 11:00").time.toString())
+        Log.d("temp", d.parse("2019-12-13 11:00").time.toString())
+        Log.d("temp", d.parse("2019-12-22 11:00").time.toString())
+        Log.d("temp", d.parse("2019-12-24 11:00").time.toString())
+        Log.d("temp", d.parse("2019-13-24 11:00").time.toString())
+        Log.d("temp", d.parse("2020-01-01 11:00").time.toString())
+        Log.d("temp", d.parse("2020-01-01 11:00").time.toString())
+        Log.d("temp", d.parse("2020-01-01 11:00").time.toString())
+        Log.d("temp", d.parse("2020-01-02 11:00").time.toString())
+        Log.d("temp", d.parse("2020-01-29 11:00").time.toString())
 
         this.initUserDB()
 

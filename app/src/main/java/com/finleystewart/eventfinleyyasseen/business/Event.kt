@@ -17,8 +17,8 @@ class Event(
 ) {
 
     companion object  {
-        val SHORT_DESC_MAX = 20;
-        val LONG_DESC_MAX = 140;
+        val SHORT_DESC_MAX = 40
+        val LONG_DESC_MAX = 140
         val MAX_DAYS = 60
 
         fun  timesRepeatedIsValid(
@@ -32,8 +32,8 @@ class Event(
     }
 
     init {
-        require(shortDesc.length <= SHORT_DESC_MAX) { "shortDesc is limited to $SHORT_DESC_MAX characters" }
-        require(longDesc.length <= LONG_DESC_MAX) { "shortDesc is limited to $LONG_DESC_MAX characters" }
+        require(shortDesc.length <= SHORT_DESC_MAX) { "shortDesc is limited to $SHORT_DESC_MAX characters. The length was: ${shortDesc.length}. The value was: $shortDesc" }
+        require(longDesc.length <= LONG_DESC_MAX) { "longDesc is limited to $LONG_DESC_MAX characters. The length was: ${longDesc.length}. The value was: $longDesc" }
         require(
             timesRepeatedIsValid(
                 repeatType,
