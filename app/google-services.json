@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "732921412751-o7sdaefij8v5efea5mgbp4b9mamc7jdr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.finleystewart.eventfinleyyasseen",
+            "certificate_hash": "9c8d5d8fb714675ff8d73fd3f2f2e11fa9c79894"
+          }
+        },
+        {
           "client_id": "732921412751-461fh669b4t925ftub9rsvtsdir41us7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
