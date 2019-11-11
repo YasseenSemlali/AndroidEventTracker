@@ -24,6 +24,14 @@
             android:name=".EventActivity"
             android:label="Events" >
         </activity>
+        <activity
+            android:name=".MyEventsActivity"
+            android:label="My Events" >
+        </activity>
+        <activity
+            android:name=".CurrentEventsActivity"
+            android:label="Current Events" >
+        </activity>
     </application>
 
 </manifest>
