@@ -15,6 +15,14 @@ class EventDAOImpl {
         Log.d(FirebaseConstants.FIREBASE_TAG, "Event added: $event")
     }
 
+    fun loadEventsInCategory(category: String, events: MutableCollection<Event> =  mutableSetOf()): MutableCollection<Event> {
+        return mutableSetOf()
+    }
+
+    fun loadCategories(categories: MutableCollection<String> =  mutableSetOf()): MutableCollection<String> {
+        return mutableSetOf()
+    }
+
     fun loadEvents(events: MutableCollection<Event> =  mutableSetOf()): MutableCollection<Event> {
         events.clear()
 
