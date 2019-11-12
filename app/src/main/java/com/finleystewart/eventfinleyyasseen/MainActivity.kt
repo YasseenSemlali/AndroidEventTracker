@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
                 adapter = CategoryAdapter(it)
             }
         })
+
+        //this.googleLogin()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
