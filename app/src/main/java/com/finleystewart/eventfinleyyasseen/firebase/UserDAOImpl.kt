@@ -18,6 +18,10 @@ class UserDAOImpl {
         Log.d(FirebaseConstants.FIREBASE_TAG, "User added: $user")
     }
 
+    fun addToUserList(event : Event) {}
+    fun removeFromUserList(event : Event) {}
+    fun isOnUserList(event : Event) : Boolean { return true;}
+
     fun loadUserEvents(events: MutableCollection<Event> =  mutableSetOf()): MutableCollection<Event> {
         events.clear()
 
