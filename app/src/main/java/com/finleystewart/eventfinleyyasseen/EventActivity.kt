@@ -22,17 +22,14 @@ class EventActivity : Activity() {
 
         var intent = intent
 
-        event = intent.extras!!.get("event") as Event
-
         val shortDesc = findViewById<TextView>(R.id.shortDesc)
-        shortDesc.text = event.shortDesc
+        shortDesc.text = intent.getStringExtra("shortdesc")
 
         val longDesc = findViewById<TextView>(R.id.longDesc)
-        longDesc.text = event.longDesc
+        longDesc.text = intent.getStringExtra("longdesc")
 
         val date = findViewById<TextView>(R.id.date)
-        val format = SimpleDateFormat("yyyy/mm/dd")
-        date.text = format.format(event.eventDate)
+        date.text = intent.getStringExtra("date")
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         val DAO = UserDAOImpl()

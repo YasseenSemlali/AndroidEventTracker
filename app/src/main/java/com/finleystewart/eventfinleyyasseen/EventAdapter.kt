@@ -1,5 +1,7 @@
 package com.finleystewart.eventfinleyyasseen
 
+import android.content.Intent
+import android.util.Log
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +26,14 @@ class EventAdapter(private val events: List<Event>)  : RecyclerView.Adapter<Even
 
         holder.view.shortDesc.text = event.shortDesc
         holder.view.date.text = event.eventDate.toString()
+
+        holder.view.setOnClickListener {
+            val intent = Intent( holder.view.context, EventActivity::class.java)
+            intent.putExtra("shortdesc", event.shortDesc)
+            intent.putExtra("longdesc", event.longDesc)
+            intent.putExtra("date", event.eventDate.toString())
+            holder.view.context.startActivity(intent)
+        }
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
