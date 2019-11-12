@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.finleystewart.eventfinleyyasseen.business.Event
 import com.finleystewart.eventfinleyyasseen.firebase.UserDAOImpl
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.text.SimpleDateFormat
 
 class EventActivity : Activity() {
 
@@ -24,8 +25,14 @@ class EventActivity : Activity() {
         event = intent.extras!!.get("event") as Event
 
         val shortDesc = findViewById<TextView>(R.id.shortDesc)
+        shortDesc.text = event.shortDesc
+        
         val longDesc = findViewById<TextView>(R.id.longDesc)
+        longDesc.text = event.longDesc
+
         val date = findViewById<TextView>(R.id.date)
+        val format = SimpleDateFormat("yyyy/mm/dd")
+        date.text = format.format(event.eventDate)
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         val DAO = UserDAOImpl()
