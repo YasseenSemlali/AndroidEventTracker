@@ -26,7 +26,7 @@ class CategoryActivity : Activity() {
                 layoutManager = LinearLayoutManager(applicationContext)
                 adapter = EventAdapter(it)
             }
-                val DividerItemDecoration = DividerItemDecoration(recyclerView.context, LinearLayoutManager(applicationContext).getOrientation())
+            val DividerItemDecoration = DividerItemDecoration(recyclerView.context, LinearLayoutManager(applicationContext).getOrientation())
             recyclerView.addItemDecoration(DividerItemDecoration)
         })
     }

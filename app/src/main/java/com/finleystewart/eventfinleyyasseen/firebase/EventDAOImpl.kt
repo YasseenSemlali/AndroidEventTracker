@@ -4,6 +4,7 @@ import android.util.Log
 import com.finleystewart.eventfinleyyasseen.business.Event
 import com.finleystewart.eventfinleyyasseen.firebase.model.DBEvent
 import com.google.firebase.database.*
+import java.util.*
 
 class EventDAOImpl {
     private val eventDB: DatabaseReference = FirebaseDatabase.getInstance().reference.child(FirebaseConstants.FIREBASE_EVENTS)
@@ -58,7 +59,7 @@ class EventDAOImpl {
                 snapshot.children.forEach {
                     val event = it.getValue<DBEvent>(DBEvent::class.java)?.toEvent(it.key!!)
 
-                    if(java.util.Calendar.getInstance().before(event?.eventDate)) {
+                    if(Date().before(event?.eventDate)) {
                         Log.v(FirebaseConstants.FIREBASE_TAG, "Event loaded: " + event?.toString())
                         events.add(event!!)
                     }
