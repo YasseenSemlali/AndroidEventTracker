@@ -37,17 +37,20 @@ class EventActivity : Activity() {
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         val DAO = UserDAOImpl()
 
-        fab.setOnClickListener {
-            if(DAO.isOnUserList(event)) {
-                DAO.removeFromUserList(event)
-                 val toast = Toast.makeText(this, "Favorited", Toast.LENGTH_SHORT)
-                 toast.show()
-            } else {
-                DAO.addToUserList(event)
-                val toast = Toast.makeText(this, "unfavorited", Toast.LENGTH_SHORT)
-                toast.show()
+        DAO.isOnUserList(event.key, fun(result: Boolean) {
+            fab.setOnClickListener {
+                if (result) {
+                    DAO.removeUserEvent(event.key)
+                    val toast = Toast.makeText(this, "Favorited", Toast.LENGTH_SHORT)
+                    toast.show()
+                } else {
+                    DAO.addUserEvent(event)
+                    val toast = Toast.makeText(this, "unfavorited", Toast.LENGTH_SHORT)
+                    toast.show()
+                }
             }
-        }
+        })
+
 
     }
 
