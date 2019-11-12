@@ -15,15 +15,11 @@ class EventDAOImpl {
         Log.d(FirebaseConstants.FIREBASE_TAG, "Event added: $event")
     }
 
-    fun loadEventsInCategory(category: String, events: MutableCollection<Event> =  mutableSetOf()): MutableCollection<Event> {
-        return mutableSetOf()
-    }
-
-    fun loadCategories(categories: MutableCollection<String> =  mutableSetOf()): MutableCollection<String> {
-        return mutableSetOf()
-    }
-
     fun loadEvents(events: MutableCollection<Event> =  mutableSetOf()): MutableCollection<Event> {
+        return loadEventsInCategory(null)
+    }
+
+    fun loadEventsInCategory(category: String?, events: MutableCollection<Event> =  mutableSetOf()): MutableCollection<Event> {
         events.clear()
 
         eventDB.addListenerForSingleValueEvent(object: ValueEventListener{
@@ -33,14 +29,41 @@ class EventDAOImpl {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                snapshot.children.mapNotNullTo(events) {
+                snapshot.children.forEach {
                     val event = it.getValue<DBEvent>(DBEvent::class.java)?.toEvent(it.key!!)
-                    Log.d(FirebaseConstants.FIREBASE_TAG, "Event loaded: " + event?.toString())
-                    event
+
+                    if(category == null || category == event?.category) {
+                        Log.v(FirebaseConstants.FIREBASE_TAG, "Event loaded: " + event?.toString())
+                        events.add(event!!)
+                    }
                 }
             }
         })
 
         return events
+    }
+
+    fun loadCategories(categories: MutableCollection<String> =  mutableSetOf()): MutableCollection<String> {
+        categories.clear()
+
+        eventDB.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(FirebaseConstants.FIREBASE_TAG, error!!.message)
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                snapshot.children.forEach {
+                    val event = it.getValue<DBEvent>(DBEvent::class.java)?.toEvent(it.key!!)
+
+                    if(!categories.contains(event?.category)) {
+                        Log.v(FirebaseConstants.FIREBASE_TAG, "Category loaded: " + event?.category.toString())
+                        categories.add(event!!.category)
+                    }
+                }
+            }
+        })
+
+        return categories
     }
 }
