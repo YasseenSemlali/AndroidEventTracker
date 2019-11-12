@@ -37,6 +37,12 @@ class EventActivity : Activity() {
         val DAO = UserDAOImpl()
 
         DAO.isOnUserList(event.key, fun(result: Boolean) {
+            if(result) {
+                fab.setImageResource(R.drawable.ic_remove_white_24dp)
+            }
+        })
+
+        DAO.isOnUserList(event.key, fun(result: Boolean) {
             fab.setOnClickListener {
                 if (result) {
                     DAO.removeUserEvent(event.key)
