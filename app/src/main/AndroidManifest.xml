@@ -32,6 +32,10 @@
             android:name=".CurrentEventsActivity"
             android:label="Current Events" >
         </activity>
+        <activity
+            android:name=".CategoryActivity"
+            android:label="Category" >
+        </activity>
     </application>
 
 </manifest>

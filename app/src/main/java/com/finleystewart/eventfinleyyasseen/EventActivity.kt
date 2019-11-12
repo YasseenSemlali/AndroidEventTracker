@@ -41,11 +41,11 @@ class EventActivity : Activity() {
             fab.setOnClickListener {
                 if (result) {
                     DAO.removeUserEvent(event.key)
-                    val toast = Toast.makeText(this, "Favorited", Toast.LENGTH_SHORT)
+                    val toast = Toast.makeText(this, "Unfavorited", Toast.LENGTH_SHORT)
                     toast.show()
                 } else {
                     DAO.addUserEvent(event)
-                    val toast = Toast.makeText(this, "unfavorited", Toast.LENGTH_SHORT)
+                    val toast = Toast.makeText(this, "Favorited", Toast.LENGTH_SHORT)
                     toast.show()
                 }
             }
