@@ -29,11 +29,7 @@ class EventAdapter(private val events: List<Event>)  : RecyclerView.Adapter<Even
 
         holder.view.setOnClickListener {
             val intent = Intent( holder.view.context, EventActivity::class.java)
-            Log.d("debug_1", event.shortDesc)
-            intent.putExtra("shortdesc", event.shortDesc)
-            Log.d("debug_1", intent.getStringExtra("shortdesc"))
-            intent.putExtra("longdesc", event.longDesc)
-            intent.putExtra("date", event.eventDate.toString())
+            intent.putExtra("event", event)
             holder.view.context.startActivity(intent)
         }
     }
