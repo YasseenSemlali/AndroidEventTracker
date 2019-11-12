@@ -6,13 +6,14 @@ import android.view.Menu
 import android.content.Intent
 import android.net.Uri
 import android.widget.TextView
+import android.widget.Toast
 import com.finleystewart.eventfinleyyasseen.business.Event
 import com.finleystewart.eventfinleyyasseen.firebase.UserDAOImpl
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class EventActivity : Activity() {
 
-    val lateinit event : Event
+    private lateinit var event : Event
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +21,7 @@ class EventActivity : Activity() {
 
         var intent = intent
 
-        event = intent.extras!!.get("event")
+        event = intent.extras!!.get("event") as Event
 
         val shortDesc = findViewById<TextView>(R.id.shortDesc)
         val longDesc = findViewById<TextView>(R.id.longDesc)
@@ -32,10 +33,12 @@ class EventActivity : Activity() {
         fab.setOnClickListener {
             if(DAO.isOnUserList(event)) {
                 DAO.removeFromUserList(event)
-                toast("Favorited")
+                 val toast = Toast.makeText(this, "Favorited", Toast.LENGTH_SHORT)
+                 toast.show()
             } else {
                 DAO.addToUserList(event)
-                toast("Unfavorited")
+                val toast = Toast.makeText(this, "unfavorited", Toast.LENGTH_SHORT)
+                toast.show()
             }
         }
 
