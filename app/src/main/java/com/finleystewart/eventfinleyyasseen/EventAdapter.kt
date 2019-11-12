@@ -4,10 +4,9 @@ import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import android.widget.Adapter
 import com.finleystewart.eventfinleyyasseen.business.Event
-import kotlinx.android.synthetic.main.layout_category.view.*
 import kotlinx.android.synthetic.main.layout_event.view.*
+import java.text.SimpleDateFormat
 
 class EventAdapter(private val events: List<Event>)  : RecyclerView.Adapter<EventAdapter.ViewHolder>()
 {
@@ -24,7 +23,9 @@ class EventAdapter(private val events: List<Event>)  : RecyclerView.Adapter<Even
         val event = events[position]
 
         holder.view.shortDesc.text = event.shortDesc
-        holder.view.date.text = event.date
+
+        val format = SimpleDateFormat("yyy/mm/dd")
+        holder.view.date.text = format.format(event.eventDate)
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)

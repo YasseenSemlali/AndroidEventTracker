@@ -26,7 +26,7 @@ class EventActivity : Activity() {
 
         val shortDesc = findViewById<TextView>(R.id.shortDesc)
         shortDesc.text = event.shortDesc
-        
+
         val longDesc = findViewById<TextView>(R.id.longDesc)
         longDesc.text = event.longDesc
 
@@ -38,15 +38,16 @@ class EventActivity : Activity() {
         val DAO = UserDAOImpl()
 
         fab.setOnClickListener {
+            var message = ""
             if(DAO.isOnUserList(event)) {
                 DAO.removeFromUserList(event)
-                 val toast = Toast.makeText(this, "Favorited", Toast.LENGTH_SHORT)
-                 toast.show()
+                message = "Favourited"
             } else {
                 DAO.addToUserList(event)
-                val toast = Toast.makeText(this, "unfavorited", Toast.LENGTH_SHORT)
-                toast.show()
+                message = "Unfavourited"
             }
+            val toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
+            toast.show()
         }
 
     }
