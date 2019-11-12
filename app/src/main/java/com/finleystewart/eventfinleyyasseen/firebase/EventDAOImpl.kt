@@ -45,6 +45,32 @@ class EventDAOImpl {
         return events
     }
 
+    fun loadCurrentEvents( callback: (events: List<Event>) -> Unit, events: MutableCollection<Event> =  mutableSetOf()): MutableCollection<Event> {
+        events.clear()
+
+        eventDB.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(FirebaseConstants.FIREBASE_TAG, error!!.message)
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                snapshot.children.forEach {
+                    val event = it.getValue<DBEvent>(DBEvent::class.java)?.toEvent(it.key!!)
+
+                    if(java.util.Calendar.getInstance().before(event?.eventDate)) {
+                        Log.v(FirebaseConstants.FIREBASE_TAG, "Event loaded: " + event?.toString())
+                        events.add(event!!)
+                    }
+
+                    callback(events.toList())
+                }
+            }
+        })
+
+        return events
+    }
+
     fun loadCategories(callback: (List<String>) -> Unit, categories: MutableCollection<String> =  mutableSetOf()): MutableCollection<String> {
         categories.clear()
 
