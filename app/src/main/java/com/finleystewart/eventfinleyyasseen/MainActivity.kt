@@ -12,64 +12,31 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.finleystewart.eventfinleyyasseen.firebase.EventDAOImpl
 import com.finleystewart.eventfinleyyasseen.firebase.FirebaseConstants
-import com.finleystewart.eventfinleyyasseen.firebase.UserDAOImpl
-import com.finleystewart.eventfinleyyasseen.business.Event
-import com.finleystewart.eventfinleyyasseen.firebase.model.DBEvent
-import com.finleystewart.eventfinleyyasseen.firebase.model.DBUser
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_main.*
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
-
+    private lateinit var recyclerView: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val d = SimpleDateFormat("yyyy-MM-dd HH:mm")
-        Log.d("temp", d.parse("2019-11-13 11:00").time.toString())
-        Log.d("temp", d.parse("2019-11-15 11:00").time.toString())
-        Log.d("temp", d.parse("2019-11-18 11:00").time.toString())
-        Log.d("temp", d.parse("2019-11-21 11:00").time.toString())
-        Log.d("temp", d.parse("2019-11-29 11:00").time.toString())
-        Log.d("temp", d.parse("2019-12-01 11:00").time.toString())
-        Log.d("temp", d.parse("2019-12-13 11:00").time.toString())
-        Log.d("temp", d.parse("2019-12-22 11:00").time.toString())
-        Log.d("temp", d.parse("2019-12-24 11:00").time.toString())
-        Log.d("temp", d.parse("2019-13-24 11:00").time.toString())
-        Log.d("temp", d.parse("2020-01-01 11:00").time.toString())
-        Log.d("temp", d.parse("2020-01-01 11:00").time.toString())
-        Log.d("temp", d.parse("2020-01-01 11:00").time.toString())
-        Log.d("temp", d.parse("2020-01-02 11:00").time.toString())
-        Log.d("temp", d.parse("2020-01-29 11:00").time.toString())
 
         this.initUserDB()
 
         this.loginMainDB()
 
-        val DAO : EventDAOImpl = EventDAOImpl()
-
-        /*
-
-        WIP
-
-        val categories : MutableCollection<Category> = DAO.loadCategories()
-
-        viewManager = LinearLayoutManager(applicationContext)
-        viewAdapter = CategoryAdapter(categories)
-        recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
-            layoutManager = viewManager
-            adapter = viewAdapter
-        }
-        */
-
+        val dao = EventDAOImpl()
+        dao.loadCategories({
+            recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
+                layoutManager = LinearLayoutManager(applicationContext)
+                adapter = CategoryAdapter(it)
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -138,7 +105,7 @@ class MainActivity : AppCompatActivity() {
 
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.d(FirebaseConstants.FIREBASE_TAG, "App wide login faiilure")
+                        Log.e(FirebaseConstants.FIREBASE_TAG, "App wide login faiilure")
                         Toast.makeText(baseContext, "Authentication failed, most app functionality will not work",
                             Toast.LENGTH_SHORT).show()
                     }
@@ -146,7 +113,7 @@ class MainActivity : AppCompatActivity() {
                     // ...
                 }
         } else {
-
+            Log.d(FirebaseConstants.FIREBASE_TAG, "Already logged in")
         }
     }
 

@@ -24,7 +24,7 @@ class EventAdapter(private val events: List<Event>)  : RecyclerView.Adapter<Even
         val event = events[position]
 
         holder.view.shortDesc.text = event.shortDesc
-        holder.view.date.text = event.date
+        holder.view.date.text = event.eventDate.toString()
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
