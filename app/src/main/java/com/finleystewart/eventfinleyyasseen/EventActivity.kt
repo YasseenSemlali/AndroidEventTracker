@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.TextView
 import com.finleystewart.eventfinleyyasseen.business.Event
+import com.finleystewart.eventfinleyyasseen.firebase.UserDAOImpl
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class EventActivity : Activity() {
@@ -26,7 +27,17 @@ class EventActivity : Activity() {
         val date = findViewById<TextView>(R.id.date)
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
-        fab.setOnClickListener( event ->  )
+        val DAO = UserDAOImpl()
+
+        fab.setOnClickListener {
+            if(DAO.isOnUserList(event)) {
+                DAO.removeFromUserList(event)
+                toast("Favorited")
+            } else {
+                DAO.addToUserList(event)
+                toast("Unfavorited")
+            }
+        }
 
     }
 
