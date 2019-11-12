@@ -18,7 +18,9 @@ class UserDAOImpl {
         Log.d(FirebaseConstants.FIREBASE_TAG, "User added: $user")
     }
 
-    fun addUserEvent(callback: (Event) -> Unit) {
+    fun addUserEvent(event: Event, callback: (Event) -> Unit) {
+        userDb.child(auth.currentUser!!.uid).child("favourited").setValue(event)
+        Log.d(FirebaseConstants.FIREBASE_TAG, "User event added: $event")
 
     }
 
