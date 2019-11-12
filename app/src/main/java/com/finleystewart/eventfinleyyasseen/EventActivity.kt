@@ -18,7 +18,7 @@ class EventActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.event_activity)
 
         var intent = intent
 
