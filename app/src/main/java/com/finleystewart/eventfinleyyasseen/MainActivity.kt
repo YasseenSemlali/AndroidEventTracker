@@ -24,6 +24,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private lateinit var googleAuth: FirebaseAuth
     private lateinit var recyclerView: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        //this.googleLogout()
+
         this.googleLogin()
     }
 
@@ -85,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(FirebaseConstants.FIREBASE_AUTH_TAG, "firebaseAuthWithGoogle:" + acct.id!!)
 
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        auth.signInWithCredential(credential)
+        googleAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
@@ -102,11 +103,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun googleLogin() {
-        auth = FirebaseAuth.getInstance()
+        googleAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance("user"))
         var currentUser = auth.currentUser
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken("237115235891-jb2v389j76u84m8f97o4ar4h20dd77pi.apps.googleusercontent.com")
             .requestEmail()
             .build()
 
@@ -122,7 +123,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun googleLogout() {
-        auth = FirebaseAuth.getInstance()
+        googleAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance("user"))
         var currentUser = auth.currentUser
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
