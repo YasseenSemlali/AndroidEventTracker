@@ -15,11 +15,11 @@ class EventDAOImpl {
         Log.d(FirebaseConstants.FIREBASE_TAG, "Event added: $event")
     }
 
-    fun loadEvents(events: MutableCollection<Event> =  mutableSetOf()): MutableCollection<Event> {
-        return loadEventsInCategory(null)
+    fun loadEvents(callback: (events: List<Event>) -> Unit, events: MutableCollection<Event> =  mutableSetOf()): MutableCollection<Event> {
+        return loadEventsInCategory(null, callback)
     }
 
-    fun loadEventsInCategory(category: String?, events: MutableCollection<Event> =  mutableSetOf()): MutableCollection<Event> {
+    fun loadEventsInCategory(category: String?, callback: (events: List<Event>) -> Unit, events: MutableCollection<Event> =  mutableSetOf()): MutableCollection<Event> {
         events.clear()
 
         eventDB.addListenerForSingleValueEvent(object: ValueEventListener{
@@ -36,6 +36,8 @@ class EventDAOImpl {
                         Log.v(FirebaseConstants.FIREBASE_TAG, "Event loaded: " + event?.toString())
                         events.add(event!!)
                     }
+
+                    callback(events.toList())
                 }
             }
         })
@@ -43,7 +45,7 @@ class EventDAOImpl {
         return events
     }
 
-    fun loadCategories(categories: MutableCollection<String> =  mutableSetOf()): MutableCollection<String> {
+    fun loadCategories(callback: (List<String>) -> Unit, categories: MutableCollection<String> =  mutableSetOf()): MutableCollection<String> {
         categories.clear()
 
         eventDB.addListenerForSingleValueEvent(object: ValueEventListener{
@@ -60,6 +62,8 @@ class EventDAOImpl {
                         Log.v(FirebaseConstants.FIREBASE_TAG, "Category loaded: " + event?.category.toString())
                         categories.add(event!!.category)
                     }
+
+                    callback(categories.toList())
                 }
             }
         })

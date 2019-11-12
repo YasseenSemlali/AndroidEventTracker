@@ -23,9 +23,7 @@ class EventAdapter(private val events: List<Event>)  : RecyclerView.Adapter<Even
         val event = events[position]
 
         holder.view.shortDesc.text = event.shortDesc
-
-        val format = SimpleDateFormat("yyy/mm/dd")
-        holder.view.date.text = format.format(event.eventDate)
+        holder.view.date.text = event.eventDate.toString()
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
