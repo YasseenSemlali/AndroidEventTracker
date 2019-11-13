@@ -30,11 +30,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        this.initUserDB()
+        this.initSecondaryDB()
+
         this.loginMainDB()
 
         val dao = EventDAOImpl()
         dao.loadCategories({
+            Log.d("firebase", it.toString())
             recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
                 layoutManager = LinearLayoutManager(applicationContext)
                 adapter = CategoryAdapter(it)
@@ -103,8 +105,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun googleLogin() {
-        googleAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance("user"))
+        googleAuth = FirebaseAuth.getInstance()
         var currentUser = auth.currentUser
+        Log.d("firebase", googleAuth?.toString())
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("237115235891-jb2v389j76u84m8f97o4ar4h20dd77pi.apps.googleusercontent.com")
@@ -123,7 +126,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun googleLogout() {
-        googleAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance("user"))
+        googleAuth = FirebaseAuth.getInstance()
         var currentUser = auth.currentUser
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -133,24 +136,24 @@ class MainActivity : AppCompatActivity() {
 
         if(currentUser == null) {
             Log.d(FirebaseConstants.FIREBASE_AUTH_TAG, "Logging out user")
-            FirebaseAuth.getInstance(FirebaseApp.getInstance("user")).signOut()
+            googleAuth.signOut()
         } else {
             Log.d(FirebaseConstants.FIREBASE_AUTH_TAG, "Didn't log out, Google account already logged in")
         }
     }
 
-    private fun initUserDB() {
+    private fun initSecondaryDB() {
         val options = FirebaseOptions.Builder()
             .setApplicationId("com.finleystewart.eventfinleyyasseen")
-            .setApiKey("AIzaSyCObFHoVy_q9spFBmqb8R2flITZXzRxVV4")
-            .setDatabaseUrl("https://eventfinleyyassenuser.firebaseio.com/")
+            .setApiKey("AIzaSyBfNAL7QezweQKK8RLLF0Jn7UB3v6AAP90")
+            .setDatabaseUrl("https://eventfinleyyasseen.firebaseio.com/")
             .build()
 
-        FirebaseApp.initializeApp(this, options, "user")
+        FirebaseApp.initializeApp(this, options, "secondary")
     }
 
     private fun loginMainDB() {
-        auth = FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance(FirebaseApp.getInstance("secondary"))
         var currentUser = auth.currentUser
 
         if(currentUser == null) {

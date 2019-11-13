@@ -3,10 +3,11 @@ package com.finleystewart.eventfinleyyasseen.firebase
 import android.util.Log
 import com.finleystewart.eventfinleyyasseen.business.Event
 import com.finleystewart.eventfinleyyasseen.firebase.model.DBEvent
+import com.google.firebase.FirebaseApp
 import com.google.firebase.database.*
 
 class EventDAOImpl {
-    private val eventDB: DatabaseReference = FirebaseDatabase.getInstance().reference.child(FirebaseConstants.FIREBASE_EVENTS)
+    private val eventDB: DatabaseReference = FirebaseDatabase.getInstance(FirebaseApp.getInstance("secondary")).reference.child(FirebaseConstants.FIREBASE_EVENTS)
 
     fun addEvent(event: DBEvent) {
         val key = eventDB.push().key!!

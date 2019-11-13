@@ -13,9 +13,9 @@ import com.google.firebase.database.ValueEventListener
 
 
 class UserDAOImpl {
-    private val eventDB: DatabaseReference = FirebaseDatabase.getInstance().reference.child(FirebaseConstants.FIREBASE_EVENTS)
-    private val userDb: DatabaseReference = FirebaseDatabase.getInstance(FirebaseApp.getInstance("user")).reference.child(FirebaseConstants.FIREBASE_USERS)
-    private val auth = FirebaseAuth.getInstance(FirebaseApp.getInstance("user"))
+    private val eventDB: DatabaseReference = FirebaseDatabase.getInstance(FirebaseApp.getInstance("secondary")).reference.child(FirebaseConstants.FIREBASE_EVENTS)
+    private val userDb: DatabaseReference = FirebaseDatabase.getInstance().reference.child(FirebaseConstants.FIREBASE_USERS)
+    private val auth = FirebaseAuth.getInstance()
 
     fun addUser(user: DBUser) {
         userDb.child(auth.currentUser!!.uid).setValue(user)
