@@ -32,10 +32,10 @@ class EventActivity : Activity() {
         when(event.category.trim()) {
             "Health Services" -> categoryIcon.setImageDrawable(getDrawable(R.drawable.category_health))
             "Academic" -> categoryIcon.setImageDrawable(getDrawable(R.drawable.category_academic))
-            "Campus Life &amp; Leadership" -> categoryIcon.icon.setImageDrawable(getDrawable(R.drawable.category_campus_life))
-            "Earth Week" -> categoryIcon.icon.setImageDrawable(getDrawable(R.drawable.category_earth_week))
-            "Peace" -> categoryIcon.icon.setImageDrawable(getDrawable(R.drawable.category_peace))
-            else -> categoryIcon.icon.setImageDrawable(getDrawable(R.drawable.category_default))
+            "Campus Life &amp; Leadership" -> categoryIcon.setImageDrawable(getDrawable(R.drawable.category_campus_life))
+            "Earth Week" -> categoryIcon.setImageDrawable(getDrawable(R.drawable.category_earth_week))
+            "Peace" -> categoryIcon.setImageDrawable(getDrawable(R.drawable.category_peace))
+            else -> categoryIcon.setImageDrawable(getDrawable(R.drawable.category_default))
         }
 
         val shortDesc = findViewById<TextView>(R.id.shortDesc)
