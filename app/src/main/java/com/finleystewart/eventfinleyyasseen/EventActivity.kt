@@ -6,12 +6,14 @@ import android.view.Menu
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.finleystewart.eventfinleyyasseen.business.Event
 import com.finleystewart.eventfinleyyasseen.firebase.FirebaseConstants
 import com.finleystewart.eventfinleyyasseen.firebase.UserDAOImpl
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.layout_category.view.*
 import java.text.SimpleDateFormat
 
 class EventActivity : Activity() {
@@ -25,6 +27,16 @@ class EventActivity : Activity() {
         var intent = intent
 
         event = intent.getSerializableExtra("event") as Event
+
+        val categoryIcon = findViewById<ImageView>(R.id.category)
+        when(event.category.trim()) {
+            "Health Services" -> categoryIcon.setImageDrawable(getDrawable(R.drawable.category_health))
+            "Academic" -> categoryIcon.setImageDrawable(getDrawable(R.drawable.category_academic))
+            "Campus Life &amp; Leadership" -> categoryIcon.icon.setImageDrawable(getDrawable(R.drawable.category_campus_life))
+            "Earth Week" -> categoryIcon.icon.setImageDrawable(getDrawable(R.drawable.category_earth_week))
+            "Peace" -> categoryIcon.icon.setImageDrawable(getDrawable(R.drawable.category_peace))
+            else -> categoryIcon.icon.setImageDrawable(getDrawable(R.drawable.category_default))
+        }
 
         val shortDesc = findViewById<TextView>(R.id.shortDesc)
         shortDesc.text = event.shortDesc
