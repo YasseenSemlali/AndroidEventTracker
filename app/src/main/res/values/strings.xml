@@ -6,4 +6,12 @@
     <string name="item4_name">WWW</string>
     <string name="aboutus">This app was made by Finley Stewart and Yasseen Semlali as a second project for their Android App Development Course.</string>
     <string name="aboutTitle">About</string>
+    <string name="hours">hours</string>
+    <string name="times">times</string>
+    <string name="siteUrl">Site url:</string>
+    <string name="eventUrl">Event url:</string>
+    <string name="duration">Duration</string>
+    <string name="repeated">Repeated</string>
+    <string name="repeatType">Repeat type</string>
+    <string name="description">Description:</string>
 </resources>

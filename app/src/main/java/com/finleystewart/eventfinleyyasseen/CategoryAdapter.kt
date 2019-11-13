@@ -30,7 +30,7 @@ class CategoryAdapter(private val categories: List<String>)  : RecyclerView.Adap
         when(category.trim()) {
             "Health Services" -> holder.view.icon.setImageDrawable(holder.view.context.getDrawable(R.drawable.category_health))
             "Academic" -> holder.view.icon.setImageDrawable(holder.view.context.getDrawable(R.drawable.category_academic))
-            "Campus Life &amp; Leadership" -> holder.view.icon.setImageDrawable(holder.view.context.getDrawable(R.drawable.category_campus_life))
+            "Campus Life & Leadership" -> holder.view.icon.setImageDrawable(holder.view.context.getDrawable(R.drawable.category_campus_life))
             "Earth Week" -> holder.view.icon.setImageDrawable(holder.view.context.getDrawable(R.drawable.category_earth_week))
             "Peace" -> holder.view.icon.setImageDrawable(holder.view.context.getDrawable(R.drawable.category_peace))
             else -> holder.view.icon.setImageDrawable(holder.view.context.getDrawable(R.drawable.category_default))
