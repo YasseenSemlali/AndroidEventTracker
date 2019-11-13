@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         val dao = EventDAOImpl()
         dao.loadCategories({
-            Log.d("firebase", it.toString())
             recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
                 layoutManager = LinearLayoutManager(applicationContext)
                 adapter = CategoryAdapter(it)

@@ -56,7 +56,7 @@ class UserDAOImpl {
     fun loadUserEvents(callback: (events: List<Event>) -> Unit = {}, events: MutableCollection<Event> =  mutableSetOf()): MutableCollection<Event> {
         events.clear()
 
-        userDb.addListenerForSingleValueEvent(object: ValueEventListener{
+        userDb.child(auth.currentUser!!.uid).child("favourited").addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
                 Log.e(FirebaseConstants.FIREBASE_TAG, error!!.message)
             }
@@ -65,13 +65,45 @@ class UserDAOImpl {
                 val size = snapshot.childrenCount
                 var i = 0.toLong()
 
-                snapshot.child(auth.currentUser!!.uid).child("favourited").children.forEach {
+                snapshot.children.forEach {
+                    val key = it.key
+                    Log.v(FirebaseConstants.FIREBASE_TAG, "Favourite key: $key")
+
+                    eventDB.addListenerForSingleValueEvent(object: ValueEventListener{
+                        override fun onCancelled(error: DatabaseError) {
+                            i++
+                            Log.e(FirebaseConstants.FIREBASE_TAG, error!!.message)
+                        }
+
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            for(item in snapshot.children!!) {
+                                if(item.key == key) {
+                                    val event = item.getValue(DBEvent::class.java)?.toEvent(item.key!!)
+                                    Log.v(FirebaseConstants.FIREBASE_TAG, "Favourite event loaded: " + event.toString())
+
+                                    event?.let {
+                                        events.add(it)
+                                        i++
+                                    }
+                                }
+
+                                if(i == size) {
+                                    callback(events.toList())
+                                }
+                            }
+                        }
+
+                    })
+                }
+
+
+                /*
+                snapshot.child("favourited").children.forEach {
                     eventDB.addListenerForSingleValueEvent(object: ValueEventListener{
                         override fun onCancelled(error: DatabaseError) {
                             Log.e(FirebaseConstants.FIREBASE_TAG, error!!.message)
                             i++
                         }
-
                         override fun onDataChange(snapshot: DataSnapshot) {
                             i++
 
@@ -91,6 +123,7 @@ class UserDAOImpl {
                         }
                     })
                 }
+                */
             }
         })
 

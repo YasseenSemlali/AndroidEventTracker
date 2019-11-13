@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.finleystewart.eventfinleyyasseen.firebase.EventDAOImpl
+import java.util.*
 
 class CurrentEventsActivity : Activity() {
 
@@ -18,9 +19,13 @@ class CurrentEventsActivity : Activity() {
 
         val dao = EventDAOImpl()
         dao.loadCurrentEvents({
+            val filtered = it.filter {
+                it.eventDate > Date()
+            }
+            val sorted = filtered.sortedBy { event -> event.eventDate }
             recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
                 layoutManager = LinearLayoutManager(applicationContext)
-                adapter = EventAdapter(it)
+                adapter = EventAdapter(sorted)
             }
             val DividerItemDecoration = DividerItemDecoration(recyclerView.context, LinearLayoutManager(applicationContext).getOrientation())
             recyclerView.addItemDecoration(DividerItemDecoration)

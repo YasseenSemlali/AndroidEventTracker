@@ -3,6 +3,7 @@ package com.finleystewart.eventfinleyyasseen
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.finleystewart.eventfinleyyasseen.business.Event
@@ -25,6 +26,8 @@ class MyEventsActivity : Activity() {
                 layoutManager = LinearLayoutManager(applicationContext)
                 adapter = EventAdapter(it)
             }
+            val DividerItemDecoration = DividerItemDecoration(recyclerView.context, LinearLayoutManager(applicationContext).getOrientation())
+            recyclerView.addItemDecoration(DividerItemDecoration)
         })
     }
 }
