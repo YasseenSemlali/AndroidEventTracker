@@ -1,5 +1,6 @@
 package com.finleystewart.eventfinleyyasseen.firebase.model
 
+import android.text.Html
 import com.finleystewart.eventfinleyyasseen.business.Event
 import com.finleystewart.eventfinleyyasseen.business.EventRepeat
 import java.util.*
@@ -16,7 +17,7 @@ data class DBEvent (val category: String = "",
                     val eventUrl: String? = null) {
     fun toEvent(key: String): Event {
         return Event(key,
-            category,
+            category.replace("&amp;", "&"),
             shortDesc,
             longDesc,
             Date(eventDate),
