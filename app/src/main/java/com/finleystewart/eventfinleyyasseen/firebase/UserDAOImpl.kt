@@ -13,9 +13,9 @@ import com.google.firebase.database.ValueEventListener
 
 
 class UserDAOImpl {
-    private val eventDB: DatabaseReference = FirebaseDatabase.getInstance().reference.child(FirebaseConstants.FIREBASE_EVENTS)
-    private val userDb: DatabaseReference = FirebaseDatabase.getInstance(FirebaseApp.getInstance("user")).reference.child(FirebaseConstants.FIREBASE_USERS)
-    private val auth = FirebaseAuth.getInstance(FirebaseApp.getInstance("user"))
+    private val eventDB: DatabaseReference = FirebaseDatabase.getInstance(FirebaseApp.getInstance("secondary")).reference.child(FirebaseConstants.FIREBASE_EVENTS)
+    private val userDb: DatabaseReference = FirebaseDatabase.getInstance().reference.child(FirebaseConstants.FIREBASE_USERS)
+    private val auth = FirebaseAuth.getInstance()
 
     fun addUser(user: DBUser) {
         userDb.child(auth.currentUser!!.uid).setValue(user)
@@ -23,7 +23,7 @@ class UserDAOImpl {
     }
 
     fun addUserEvent(event: Event, callback: (event: Event) -> Unit = {}) {
-        userDb.child(auth.currentUser!!.uid).child("favourited").setValue(event)
+        userDb.child(auth.currentUser!!.uid).child("favourited").child(event.key).setValue(true)
         Log.d(FirebaseConstants.FIREBASE_TAG, "User event added: $event")
 
         callback(event)
@@ -44,6 +44,10 @@ class UserDAOImpl {
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.value?.let {
+                        Log.d("firebase", it.toString())
+                    }
+                    Log.d("firebase", snapshot.toString())
                     callback(snapshot.value != null)
                 }
             })
@@ -71,11 +75,11 @@ class UserDAOImpl {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             i++
 
-                            val key: String = it.getValue(String::class.java)!!
+                            val key: String = it.key!!
 
                             val event: Event? = snapshot.child(key).getValue(DBEvent::class.java)?.toEvent(key)
 
-                            Log.d(FirebaseConstants.FIREBASE_TAG, "User Event loaded: " + event?.toString())
+                            Log.v(FirebaseConstants.FIREBASE_TAG, "User Event loaded: " + event?.toString())
 
                             event?.let {
                                 events.add(it)

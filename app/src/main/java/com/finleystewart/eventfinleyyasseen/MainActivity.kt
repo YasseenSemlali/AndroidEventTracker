@@ -17,28 +17,37 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.firebase.auth.GoogleAuthProvider
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private lateinit var googleAuth: FirebaseAuth
     private lateinit var recyclerView: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        this.initUserDB()
+        this.initSecondaryDB()
 
         this.loginMainDB()
 
         val dao = EventDAOImpl()
         dao.loadCategories({
+            Log.d("firebase", it.toString())
             recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
                 layoutManager = LinearLayoutManager(applicationContext)
                 adapter = CategoryAdapter(it)
             }
         })
+    }
 
-        //this.googleLogin()
+    override fun onStart() {
+        super.onStart()
+
+        this.googleLogin()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -57,44 +66,94 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == 0) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account!!)
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(FirebaseConstants.FIREBASE_AUTH_TAG, "Google sign in failed", e)
+                // ...
+            }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        Log.d(FirebaseConstants.FIREBASE_AUTH_TAG, "firebaseAuthWithGoogle:" + acct.id!!)
+
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        googleAuth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(FirebaseConstants.FIREBASE_AUTH_TAG, "signInWithCredential:success")
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(FirebaseConstants.FIREBASE_AUTH_TAG, "signInWithCredential:failure", task.exception)
+                    Toast.makeText(baseContext, "Google authentication failed, most app functionality will not work",
+                        Toast.LENGTH_SHORT).show()
+                }
+
+                // ...
+            }
+    }
+
     private fun googleLogin() {
+        googleAuth = FirebaseAuth.getInstance()
+        var currentUser = auth.currentUser
+        Log.d("firebase", googleAuth?.toString())
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken("237115235891-jb2v389j76u84m8f97o4ar4h20dd77pi.apps.googleusercontent.com")
             .requestEmail()
             .build()
-        val account = GoogleSignIn.getLastSignedInAccount(this)
 
-        if(account != null) {
+        if(currentUser == null) {
             val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
             val signInIntent = mGoogleSignInClient.signInIntent
+
+            Log.d(FirebaseConstants.FIREBASE_AUTH_TAG, "Opening google activity")
             startActivityForResult(signInIntent, 0)
+        } else {
+            Log.d(FirebaseConstants.FIREBASE_AUTH_TAG, "Didn't log in, Google account already logged in")
         }
     }
 
     private fun googleLogout() {
+        googleAuth = FirebaseAuth.getInstance()
+        var currentUser = auth.currentUser
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-        val account = GoogleSignIn.getLastSignedInAccount(this)
 
-        if(account != null) {
-            FirebaseAuth.getInstance(FirebaseApp.getInstance("user")).signOut()
+        if(currentUser == null) {
+            Log.d(FirebaseConstants.FIREBASE_AUTH_TAG, "Logging out user")
+            googleAuth.signOut()
+        } else {
+            Log.d(FirebaseConstants.FIREBASE_AUTH_TAG, "Didn't log out, Google account already logged in")
         }
     }
 
-    private fun initUserDB() {
+    private fun initSecondaryDB() {
         val options = FirebaseOptions.Builder()
             .setApplicationId("com.finleystewart.eventfinleyyasseen")
-            .setApiKey("AIzaSyCObFHoVy_q9spFBmqb8R2flITZXzRxVV4")
-            .setDatabaseUrl("https://eventfinleyyassenuser.firebaseio.com/")
+            .setApiKey("AIzaSyBfNAL7QezweQKK8RLLF0Jn7UB3v6AAP90")
+            .setDatabaseUrl("https://eventfinleyyasseen.firebaseio.com/")
             .build()
 
-        FirebaseApp.initializeApp(this, options, "user")
+        FirebaseApp.initializeApp(this, options, "secondary")
     }
 
     private fun loginMainDB() {
-        auth = FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance(FirebaseApp.getInstance("secondary"))
         var currentUser = auth.currentUser
 
         if(currentUser == null) {
@@ -102,12 +161,12 @@ class MainActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        Log.d(FirebaseConstants.FIREBASE_TAG, "App wide login success")
+                        Log.d(FirebaseConstants.FIREBASE_AUTH_TAG, "App wide login success")
                         currentUser = auth.currentUser
 
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.e(FirebaseConstants.FIREBASE_TAG, "App wide login faiilure")
+                        Log.e(FirebaseConstants.FIREBASE_AUTH_TAG, "App wide login faiilure")
                         Toast.makeText(baseContext, "Authentication failed, most app functionality will not work",
                             Toast.LENGTH_SHORT).show()
                     }
@@ -115,7 +174,7 @@ class MainActivity : AppCompatActivity() {
                     // ...
                 }
         } else {
-            Log.d(FirebaseConstants.FIREBASE_TAG, "Already logged in")
+            Log.d(FirebaseConstants.FIREBASE_AUTH_TAG, "Already logged in")
         }
     }
 

@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.view.Menu
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.finleystewart.eventfinleyyasseen.business.Event
+import com.finleystewart.eventfinleyyasseen.firebase.FirebaseConstants
 import com.finleystewart.eventfinleyyasseen.firebase.UserDAOImpl
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.layout_category.view.*
 import java.text.SimpleDateFormat
 
 class EventActivity : Activity() {
@@ -23,6 +27,16 @@ class EventActivity : Activity() {
         var intent = intent
 
         event = intent.getSerializableExtra("event") as Event
+
+        val categoryIcon = findViewById<ImageView>(R.id.category)
+        when(event.category.trim()) {
+            "Health Services" -> categoryIcon.setImageDrawable(getDrawable(R.drawable.category_health))
+            "Academic" -> categoryIcon.setImageDrawable(getDrawable(R.drawable.category_academic))
+            "Campus Life &amp; Leadership" -> categoryIcon.icon.setImageDrawable(getDrawable(R.drawable.category_campus_life))
+            "Earth Week" -> categoryIcon.icon.setImageDrawable(getDrawable(R.drawable.category_earth_week))
+            "Peace" -> categoryIcon.icon.setImageDrawable(getDrawable(R.drawable.category_peace))
+            else -> categoryIcon.icon.setImageDrawable(getDrawable(R.drawable.category_default))
+        }
 
         val shortDesc = findViewById<TextView>(R.id.shortDesc)
         shortDesc.text = event.shortDesc
@@ -42,19 +56,24 @@ class EventActivity : Activity() {
             }
         })
 
-        DAO.isOnUserList(event.key, fun(result: Boolean) {
-            fab.setOnClickListener {
+        fab.setOnClickListener {
+            DAO.isOnUserList(event.key, fun(result: Boolean) {
+                Log.d(FirebaseConstants.FIREBASE_TAG, "isOnUserList: $result")
                 if (result) {
                     DAO.removeUserEvent(event.key)
+                    fab.setImageResource(R.drawable.ic_add_white_24dp)
                     val toast = Toast.makeText(this, "Unfavorited", Toast.LENGTH_SHORT)
                     toast.show()
                 } else {
                     DAO.addUserEvent(event)
+                    fab.setImageResource(R.drawable.ic_remove_white_24dp)
                     val toast = Toast.makeText(this, "Favorited", Toast.LENGTH_SHORT)
                     toast.show()
                 }
-            }
-        })
+            })
+
+        }
+
 
     }
 

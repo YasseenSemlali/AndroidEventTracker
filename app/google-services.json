@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "732921412751",
-    "firebase_url": "https://eventfinleyyasseen.firebaseio.com",
-    "project_id": "eventfinleyyasseen",
-    "storage_bucket": "eventfinleyyasseen.appspot.com"
+    "project_number": "237115235891",
+    "firebase_url": "https://eventfinleyyassenuser.firebaseio.com",
+    "project_id": "eventfinleyyassenuser",
+    "storage_bucket": "eventfinleyyassenuser.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:732921412751:android:d788860727517af31604fa",
+        "mobilesdk_app_id": "1:237115235891:android:b29e3c15193db156fd8d46",
         "android_client_info": {
           "package_name": "com.finleystewart.eventfinleyyasseen"
         }
       },
       "oauth_client": [
         {
-          "client_id": "732921412751-o7sdaefij8v5efea5mgbp4b9mamc7jdr.apps.googleusercontent.com",
+          "client_id": "237115235891-m8h8c8crrl5unl728s3i4dc41r6nht89.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.finleystewart.eventfinleyyasseen",
@@ -23,28 +23,20 @@
           }
         },
         {
-          "client_id": "732921412751-461fh669b4t925ftub9rsvtsdir41us7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.finleystewart.eventfinleyyasseen",
-            "certificate_hash": "8c09f67c2274f8ff12cafc815d1056e58d3d3696"
-          }
-        },
-        {
-          "client_id": "732921412751-or2hki3c6b0ub5k65uupnebh0v7d37qp.apps.googleusercontent.com",
+          "client_id": "237115235891-jb2v389j76u84m8f97o4ar4h20dd77pi.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCWWRj0ibWkedph0bdjIf5YritkckkIouY"
+          "current_key": "AIzaSyBk8BTy1Kehb5on3kHpBWVXi_4Kdm4NQYU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "732921412751-or2hki3c6b0ub5k65uupnebh0v7d37qp.apps.googleusercontent.com",
+              "client_id": "237115235891-jb2v389j76u84m8f97o4ar4h20dd77pi.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
