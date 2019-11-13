@@ -1,5 +1,7 @@
 package com.finleystewart.eventfinleyyasseen.business
 
+
+import java.io.Serializable
 import java.util.*
 
 class Event(
@@ -14,7 +16,7 @@ class Event(
     val expired: Boolean = false,
     val siteUrl: String? = null,
     val eventUrl: String? = null
-) {
+) : Serializable {
 
     companion object  {
         val SHORT_DESC_MAX = 40

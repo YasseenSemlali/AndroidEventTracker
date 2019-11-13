@@ -1,11 +1,13 @@
 package com.finleystewart.eventfinleyyasseen
 
+import android.content.Intent
 import android.util.Log
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.Adapter
+import androidx.core.content.ContextCompat.startActivity
 import kotlinx.android.synthetic.main.layout_category.view.*
 import kotlinx.android.synthetic.main.layout_event.view.*
 
@@ -21,11 +23,14 @@ class CategoryAdapter(private val categories: List<String>)  : RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val event = categories[position]
+        val category = categories[position]
 
-        holder.view.name.text = event
+        holder.view.name.text = category
         holder.view.setOnClickListener {
-            Log.d("categories", "$event clicked")
+            Log.d("categories", "$category clicked")
+            val intent = Intent( holder.view.context, CategoryActivity::class.java)
+            intent.putExtra("category",category)
+            holder.view.context.startActivity(intent)
         }
     }
 

@@ -185,6 +185,16 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, AboutActivity::class.java))
                 return true
             }
+            R.id.item2 -> {
+                // Start Current Activity
+                startActivity(Intent(this, CurrentEventsActivity::class.java))
+                return true
+            }
+            R.id.item3 -> {
+                // Start Favorites Activity
+                startActivity(Intent(this, MyEventsActivity::class.java))
+                return true
+            }
             else -> {
                 return super.onOptionsItemSelected(item)
             }
