@@ -26,6 +26,16 @@ class CategoryAdapter(private val categories: List<String>)  : RecyclerView.Adap
         val category = categories[position]
 
         holder.view.name.text = category
+
+        when(category.trim()) {
+            "Health Services" -> holder.view.icon.setImageDrawable(holder.view.context.getDrawable(R.drawable.category_health))
+            "Academic" -> holder.view.icon.setImageDrawable(holder.view.context.getDrawable(R.drawable.category_academic))
+            "Campus Life &amp; Leadership" -> holder.view.icon.setImageDrawable(holder.view.context.getDrawable(R.drawable.category_campus_life))
+            "Earth Week" -> holder.view.icon.setImageDrawable(holder.view.context.getDrawable(R.drawable.category_earth_week))
+            "Peace" -> holder.view.icon.setImageDrawable(holder.view.context.getDrawable(R.drawable.category_peace))
+            else -> holder.view.icon.setImageDrawable(holder.view.context.getDrawable(R.drawable.category_default))
+        }
+
         holder.view.setOnClickListener {
             Log.d("categories", "$category clicked")
             val intent = Intent( holder.view.context, CategoryActivity::class.java)
